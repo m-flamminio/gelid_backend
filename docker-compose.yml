@@ -19,3 +19,11 @@ services:
         environment:
             MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
             MYSQL_HOST: mariadb_test
+
+    frontend:
+        image: gelid_frontend
+        container_name: fe_test1
+        ports:
+            - 3000:3000
+        depends_on:
+            - app
