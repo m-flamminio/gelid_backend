@@ -10,11 +10,13 @@ import it.unimol.gelid.repositories.ContextRepository;
 import it.unimol.gelid.repositories.IssueRepository;
 import it.unimol.gelid.repositories.SegmentRepository;
 import it.unimol.gelid.repositories.VideoRepository;
+import it.unimol.gelid.repositories.projections.SegmentInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class GelidService {
@@ -76,5 +78,9 @@ public class GelidService {
 
     public Segment getSegmentById(Long videoId, Long segmentId) {
         return segmentRepository.findByVideo_IdAndId(videoId, segmentId).orElseThrow(() -> new ElementNotFoundException("Segment: " + segmentId + " for Video: " + videoId));
+    }
+
+    public List<SegmentInfo> getContextsByVideoId(Long videoId) {
+        return segmentRepository.findDistinctByVideo_Id(videoId);
     }
 }

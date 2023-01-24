@@ -1,6 +1,7 @@
 package it.unimol.gelid.controllers;
 
 import it.unimol.gelid.entities.enums.IssueType;
+import it.unimol.gelid.repositories.projections.SegmentInfo;
 import it.unimol.gelid.services.GelidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -8,6 +9,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -45,5 +48,11 @@ public class GelidController {
                                                    @PathVariable("videoId") Long videoId) {
         return ResponseEntity
                 .ok(new ByteArrayResource(gelidService.getSegmentById(videoId, segmentId).getData()));
+    }
+
+    @GetMapping("video/{videoId}/contexts")
+    public ResponseEntity<List<SegmentInfo>> getContextsByVideoId(@PathVariable("videoId") Long videoId) {
+        return ResponseEntity
+                .ok(gelidService.getContextsByVideoId(videoId));
     }
 }
