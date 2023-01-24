@@ -1,0 +1,21 @@
+services:
+    db:
+        image: mariadb:latest
+        command: "mysqld --max_allowed_packet=110M"
+        container_name: mariadb_test
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: "${MYSQL_PASSWORD}"
+
+    app:
+        build: "."
+        depends_on:
+            - db
+        container_name: be_test1
+        ports:
+            - 15000:15000
+        environment:
+            MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+            MYSQL_HOST: mariadb_test
