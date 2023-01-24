@@ -1,6 +1,10 @@
 package it.unimol.gelid.services;
 
+import it.unimol.gelid.entities.Context;
+import it.unimol.gelid.entities.Issue;
+import it.unimol.gelid.entities.Segment;
 import it.unimol.gelid.entities.Video;
+import it.unimol.gelid.entities.enums.IssueType;
 import it.unimol.gelid.exceptions.ElementNotFoundException;
 import it.unimol.gelid.repositories.ContextRepository;
 import it.unimol.gelid.repositories.IssueRepository;
@@ -43,5 +47,30 @@ public class GelidService {
 
     public Video getVideo(Long videoId) {
         return videoRepository.findById(videoId).orElseThrow(() -> new ElementNotFoundException("Video: " + videoId));
+    }
+
+    public void saveSegment(MultipartFile file, Long videoId, Long contextId, Long issueId, IssueType issueType) {
+        Video video = videoRepository.findById(videoId)
+                .orElseThrow(() -> new ElementNotFoundException("Video: " + videoId));
+
+        Context context = contextRepository.findById(contextId)
+                .orElseThrow(() -> new ElementNotFoundException("context: " + contextId));
+
+        Issue issue = issueRepository.findById(issueId)
+                .orElseThrow(() -> new ElementNotFoundException("issue: " + issueId));
+
+        Segment newSegment = new Segment();
+        newSegment.setVideo(video);
+        newSegment.setContext(context);
+        newSegment.setIssue(issue);
+        newSegment.setIssueType(issueType);
+
+        try {
+            newSegment.setData(file.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        segmentRepository.save(newSegment);
     }
 }

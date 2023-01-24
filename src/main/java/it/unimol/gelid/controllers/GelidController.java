@@ -1,5 +1,6 @@
 package it.unimol.gelid.controllers;
 
+import it.unimol.gelid.entities.enums.IssueType;
 import it.unimol.gelid.services.GelidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -26,5 +27,16 @@ public class GelidController {
     public ResponseEntity<Resource> getVideoById(@PathVariable("id") Long videoId) {
         return ResponseEntity
                 .ok(new ByteArrayResource(gelidService.getVideo(videoId).getData()));
+    }
+
+    @PostMapping("/video/{videoId}/segments")
+    public ResponseEntity<String> saveSegment(@RequestParam("file") MultipartFile file,
+                                              @PathVariable("videoId") Long videoId,
+                                              @RequestParam Long contextId,
+                                              @RequestParam Long issueId,
+                                              @RequestParam IssueType issueType
+                                              ) {
+        gelidService.saveSegment(file, videoId, contextId, issueId, issueType);
+        return ResponseEntity.ok("Segment saved");
     }
 }
