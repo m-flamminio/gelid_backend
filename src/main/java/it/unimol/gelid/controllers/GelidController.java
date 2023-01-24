@@ -70,4 +70,10 @@ public class GelidController {
                                                                    @RequestParam Long issueId) {
         return ResponseEntity.ok(gelidService.getSegmentsByVideoAndContextAndIssue(videoId, contextId, issueId));
     }
+
+    @PostMapping("contexts")
+    public ResponseEntity<String> addContext(@RequestParam String name) {
+        gelidService.addContext(name);
+        return ResponseEntity.ok("Context added");
+    }
 }

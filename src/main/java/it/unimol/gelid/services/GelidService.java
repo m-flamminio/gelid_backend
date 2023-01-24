@@ -93,4 +93,10 @@ public class GelidService {
     public List<ReducedSegment> getSegmentsByVideoAndContextAndIssue(Long videoId, Long contextId, Long issueId) {
         return segmentRepository.findByVideo_IdAndContext_IdAndIssue_Id(videoId, contextId, issueId);
     }
+
+    public void addContext(String name) {
+        Context context = new Context();
+        context.setName(name);
+        contextRepository.save(context);
+    }
 }
