@@ -1,6 +1,7 @@
 package it.unimol.gelid.controllers;
 
 import it.unimol.gelid.entities.enums.IssueType;
+import it.unimol.gelid.repositories.projections.ReducedSegment;
 import it.unimol.gelid.repositories.projections.SegmentContextInfo;
 import it.unimol.gelid.repositories.projections.SegmentIssueInfo;
 import it.unimol.gelid.services.GelidService;
@@ -39,7 +40,7 @@ public class GelidController {
                                               @RequestParam Long contextId,
                                               @RequestParam Long issueId,
                                               @RequestParam IssueType issueType
-                                              ) {
+    ) {
         gelidService.saveSegment(file, videoId, contextId, issueId, issueType);
         return ResponseEntity.ok("Segment saved");
     }
@@ -59,7 +60,14 @@ public class GelidController {
 
     @GetMapping("video/{videoId}/contexts/{contextId}/issues")
     public ResponseEntity<List<SegmentIssueInfo>> getIssuesByVideoAndContext(@PathVariable("videoId") Long videoId,
-                                                                     @PathVariable("contextId") Long contextId) {
+                                                                             @PathVariable("contextId") Long contextId) {
         return ResponseEntity.ok(gelidService.getIssuesByVideoAndContext(videoId, contextId));
+    }
+
+    @GetMapping("video/{videoId}/segments")
+    public ResponseEntity<List<ReducedSegment>> getIssuesByContext(@PathVariable("videoId") Long videoId,
+                                                                   @RequestParam Long contextId,
+                                                                   @RequestParam Long issueId) {
+        return ResponseEntity.ok(gelidService.getSegmentsByVideoAndContextAndIssue(videoId, contextId, issueId));
     }
 }

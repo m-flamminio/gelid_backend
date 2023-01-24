@@ -10,6 +10,7 @@ import it.unimol.gelid.repositories.ContextRepository;
 import it.unimol.gelid.repositories.IssueRepository;
 import it.unimol.gelid.repositories.SegmentRepository;
 import it.unimol.gelid.repositories.VideoRepository;
+import it.unimol.gelid.repositories.projections.ReducedSegment;
 import it.unimol.gelid.repositories.projections.SegmentContextInfo;
 import it.unimol.gelid.repositories.projections.SegmentIssueInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,5 +88,9 @@ public class GelidService {
 
     public List<SegmentIssueInfo> getIssuesByVideoAndContext(Long videoId, Long contextId) {
         return segmentRepository.findDistinctByVideo_IdAndContext_Id(videoId, contextId);
+    }
+
+    public List<ReducedSegment> getSegmentsByVideoAndContextAndIssue(Long videoId, Long contextId, Long issueId) {
+        return segmentRepository.findByVideo_IdAndContext_IdAndIssue_Id(videoId, contextId, issueId);
     }
 }
