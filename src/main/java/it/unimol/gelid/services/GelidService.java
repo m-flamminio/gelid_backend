@@ -73,4 +73,8 @@ public class GelidService {
 
         segmentRepository.save(newSegment);
     }
+
+    public Segment getSegmentById(Long videoId, Long segmentId) {
+        return segmentRepository.findByVideo_IdAndId(videoId, segmentId).orElseThrow(() -> new ElementNotFoundException("Segment: " + segmentId + " for Video: " + videoId));
+    }
 }

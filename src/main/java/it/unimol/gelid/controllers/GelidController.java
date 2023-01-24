@@ -39,4 +39,11 @@ public class GelidController {
         gelidService.saveSegment(file, videoId, contextId, issueId, issueType);
         return ResponseEntity.ok("Segment saved");
     }
+
+    @GetMapping("/video/{videoId}/segments/{segmentId}")
+    public ResponseEntity<Resource> getSegmentById(@PathVariable("segmentId") Long segmentId,
+                                                   @PathVariable("videoId") Long videoId) {
+        return ResponseEntity
+                .ok(new ByteArrayResource(gelidService.getSegmentById(videoId, segmentId).getData()));
+    }
 }
