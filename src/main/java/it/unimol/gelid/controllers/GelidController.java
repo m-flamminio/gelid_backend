@@ -76,4 +76,10 @@ public class GelidController {
         gelidService.addContext(name);
         return ResponseEntity.ok("Context added");
     }
+
+    @PostMapping("issues")
+    public ResponseEntity<String> addIssue(@RequestParam String name) {
+        gelidService.addIssue(name);
+        return ResponseEntity.ok("Issue added");
+    }
 }

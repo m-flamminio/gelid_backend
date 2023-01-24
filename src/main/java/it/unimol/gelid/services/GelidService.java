@@ -99,4 +99,10 @@ public class GelidService {
         context.setName(name);
         contextRepository.save(context);
     }
+
+    public void addIssue(String name) {
+        Issue issue = new Issue();
+        issue.setName(name);
+        issueRepository.save(issue);
+    }
 }
