@@ -1,6 +1,7 @@
 package it.unimol.gelid.services;
 
 import it.unimol.gelid.entities.Video;
+import it.unimol.gelid.exceptions.ElementNotFoundException;
 import it.unimol.gelid.repositories.ContextRepository;
 import it.unimol.gelid.repositories.IssueRepository;
 import it.unimol.gelid.repositories.SegmentRepository;
@@ -38,5 +39,9 @@ public class GelidService {
         }
 
         videoRepository.save(newVid);
+    }
+
+    public Video getVideo(Long videoId) {
+        return videoRepository.findById(videoId).orElseThrow(() -> new ElementNotFoundException("Video: " + videoId));
     }
 }
