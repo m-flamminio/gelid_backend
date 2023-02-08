@@ -1,9 +1,9 @@
 package it.unimol.gelid.controllers;
 
+import it.unimol.gelid.entities.Segment;
 import it.unimol.gelid.entities.enums.IssueType;
-import it.unimol.gelid.repositories.projections.ReducedSegment;
+import it.unimol.gelid.repositories.projections.SegmentIssueType;
 import it.unimol.gelid.repositories.projections.SegmentContextInfo;
-import it.unimol.gelid.repositories.projections.SegmentIssueInfo;
 import it.unimol.gelid.services.GelidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -59,16 +59,18 @@ public class GelidController {
     }
 
     @GetMapping("video/{videoId}/contexts/{contextId}/issues")
-    public ResponseEntity<List<SegmentIssueInfo>> getIssuesByVideoAndContext(@PathVariable("videoId") Long videoId,
+    public ResponseEntity<List<SegmentIssueType>> getIssuesByVideoAndContext(@PathVariable("videoId") Long videoId,
                                                                              @PathVariable("contextId") Long contextId) {
         return ResponseEntity.ok(gelidService.getIssuesByVideoAndContext(videoId, contextId));
     }
 
     @GetMapping("video/{videoId}/segments")
-    public ResponseEntity<List<ReducedSegment>> getIssuesByContext(@PathVariable("videoId") Long videoId,
-                                                                   @RequestParam Long contextId,
-                                                                   @RequestParam Long issueId) {
-        return ResponseEntity.ok(gelidService.getSegmentsByVideoAndContextAndIssue(videoId, contextId, issueId));
+    public ResponseEntity<List<Segment>> getSegmentsByContext(@PathVariable("videoId") Long videoId,
+                                                            @RequestParam Long contextId,
+                                                            @RequestParam(required = false) Long issueId,
+                                                            @RequestParam IssueType issueType
+                                                                   ) {
+        return ResponseEntity.ok(gelidService.getSegmentsByVideoAndContextAndIssueType(videoId, contextId, issueType));
     }
 
     @PostMapping("contexts")
