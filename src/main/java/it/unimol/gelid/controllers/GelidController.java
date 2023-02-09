@@ -40,9 +40,11 @@ public class GelidController {
                                               @PathVariable("videoId") Long videoId,
                                               @RequestParam Long contextId,
                                               @RequestParam Long issueId,
-                                              @RequestParam IssueType issueType
+                                              @RequestParam IssueType issueType,
+                                              @RequestParam Long startSecond,
+                                              @RequestParam Long endSecond
     ) {
-        gelidService.saveSegment(file, videoId, contextId, issueId, issueType);
+        gelidService.saveSegment(file, videoId, contextId, issueId, issueType, startSecond, endSecond);
         return ResponseEntity.ok("Segment saved");
     }
 

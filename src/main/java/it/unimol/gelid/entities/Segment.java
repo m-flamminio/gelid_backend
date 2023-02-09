@@ -22,6 +22,12 @@ public class Segment {
     @JsonIgnore
     private byte[] data;
 
+    @Column(name = "start_second", nullable = false)
+    private Long startSecond;
+
+    @Column(name = "end_second", nullable = false)
+    private Long endSecond;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "video_id")
     private Video video;

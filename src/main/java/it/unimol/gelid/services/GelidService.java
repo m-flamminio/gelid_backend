@@ -51,7 +51,14 @@ public class GelidService {
         return videoRepository.findById(videoId).orElseThrow(() -> new ElementNotFoundException("Video: " + videoId));
     }
 
-    public void saveSegment(MultipartFile file, Long videoId, Long contextId, Long issueId, IssueType issueType) {
+    public void saveSegment(MultipartFile file,
+                            Long videoId,
+                            Long contextId,
+                            Long issueId,
+                            IssueType issueType,
+                            Long startSecond,
+                            Long endSecond
+    ) {
         Video video = videoRepository.findById(videoId)
                 .orElseThrow(() -> new ElementNotFoundException("Video: " + videoId));
 
@@ -66,6 +73,8 @@ public class GelidService {
         newSegment.setContext(context);
         newSegment.setIssue(issue);
         newSegment.setIssueType(issueType);
+        newSegment.setStartSecond(startSecond);
+        newSegment.setEndSecond(endSecond);
 
         try {
             newSegment.setData(file.getBytes());
