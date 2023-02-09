@@ -33,10 +33,11 @@ public class GelidService {
         this.issueRepository = issueRepository;
     }
 
-    public void saveVideo(MultipartFile file, String name) {
+    public void saveVideo(MultipartFile file, String title, String url) {
         Video newVid = new Video();
 
-        newVid.setName(name);
+        newVid.setTitle(title);
+        newVid.setUrl(url);
         try {
             newVid.setData(file.getBytes());
         } catch (IOException e) {
@@ -92,7 +93,7 @@ public class GelidService {
     }
 
     public List<Segment> getSegmentsByVideoAndContextAndIssueType(Long videoId, Long contextId, IssueType issueType) {
-        return segmentRepository.findDistinctByVideo_IdAndContext_IdAndIssueType(videoId,contextId,issueType);
+        return segmentRepository.findDistinctByVideo_IdAndContext_IdAndIssueType(videoId, contextId, issueType);
     }
 
     public void addContext(String name) {

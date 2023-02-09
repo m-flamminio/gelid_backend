@@ -23,8 +23,9 @@ public class GelidController {
     private GelidService gelidService;
 
     @PostMapping("/video")
-    public ResponseEntity<String> saveVideo(@RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
-        gelidService.saveVideo(file, name);
+    public ResponseEntity<String> saveVideo(@RequestParam("file") MultipartFile file, @RequestParam("title") String title,
+                                            @RequestParam("url") String url) {
+        gelidService.saveVideo(file, title, url);
         return ResponseEntity.ok("Video saved successfully.");
     }
 

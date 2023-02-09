@@ -18,8 +18,11 @@ public class Video {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, name = "name")
-    private String name;
+    @Column(nullable = false, name = "title")
+    private String title;
+    
+    @Column(nullable = false, name = "url")
+    private String url;
 
     @Lob
     @Column(name = "data", columnDefinition = "LONGBLOB", nullable = false)
