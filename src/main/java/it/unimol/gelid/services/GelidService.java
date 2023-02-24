@@ -1,10 +1,8 @@
 package it.unimol.gelid.services;
 
-import it.unimol.gelid.entities.Context;
-import it.unimol.gelid.entities.Issue;
-import it.unimol.gelid.entities.Segment;
-import it.unimol.gelid.entities.Video;
+import it.unimol.gelid.entities.*;
 import it.unimol.gelid.entities.enums.IssueType;
+import it.unimol.gelid.exceptions.ElementAlreadyExistException;
 import it.unimol.gelid.exceptions.ElementNotFoundException;
 import it.unimol.gelid.repositories.*;
 import it.unimol.gelid.repositories.projections.ReducedSegment;
@@ -24,13 +22,15 @@ public class GelidService {
     private final SegmentRepository segmentRepository;
     private final ContextRepository contextRepository;
     private final IssueRepository issueRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public GelidService(VideoRepository videoRepository, SegmentRepository segmentRepository, ContextRepository contextRepository, IssueRepository issueRepository) {
+    public GelidService(VideoRepository videoRepository, SegmentRepository segmentRepository, ContextRepository contextRepository, IssueRepository issueRepository, UserRepository userRepository) {
         this.videoRepository = videoRepository;
         this.segmentRepository = segmentRepository;
         this.contextRepository = contextRepository;
         this.issueRepository = issueRepository;
+        this.userRepository = userRepository;
     }
 
     public void saveVideo(MultipartFile file, String title, String url) {
@@ -118,5 +118,20 @@ public class GelidService {
         Issue issue = new Issue();
         issue.setName(name);
         issueRepository.save(issue);
+    }
+
+    public boolean checkUsernameAndPassword(String username, String password) {
+        return userRepository.existsByUsernameAndPassword(username, password);
+    }
+
+    public void addUser(String username, String password) {
+        if (userRepository.existsByUsernameIgnoreCase(username))
+            throw new ElementAlreadyExistException("user " + username);
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+
+        userRepository.save(user);
     }
 }

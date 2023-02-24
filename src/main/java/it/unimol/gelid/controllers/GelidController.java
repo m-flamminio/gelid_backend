@@ -87,4 +87,21 @@ public class GelidController {
         gelidService.addIssue(name);
         return ResponseEntity.ok("Issue added");
     }
+
+    @GetMapping("users")
+    public ResponseEntity<Boolean> checkUsernameAndPassword(
+            @RequestParam String username,
+            @RequestParam String password
+    ) {
+        return ResponseEntity.ok(gelidService.checkUsernameAndPassword(username, password));
+    }
+
+    @PostMapping("users")
+    public ResponseEntity<String> addUser(
+            @RequestParam String username,
+            @RequestParam String password
+    ) {
+        gelidService.addUser(username, password);
+        return ResponseEntity.ok("Username Added");
+    }
 }
