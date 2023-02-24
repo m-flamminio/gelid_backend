@@ -36,8 +36,8 @@ public class Segment {
     @JoinColumn(name = "context_id")
     private Context context;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "issue_id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "issue_id", nullable = true)
     private Issue issue;
 
     @Enumerated(EnumType.STRING)

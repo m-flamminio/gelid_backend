@@ -39,7 +39,7 @@ public class GelidController {
     public ResponseEntity<String> saveSegment(@RequestParam("file") MultipartFile file,
                                               @PathVariable("videoId") Long videoId,
                                               @RequestParam Long contextId,
-                                              @RequestParam Long issueId,
+                                              @RequestParam(required = false) Long issueId,
                                               @RequestParam IssueType issueType,
                                               @RequestParam Long startSecond,
                                               @RequestParam Long endSecond

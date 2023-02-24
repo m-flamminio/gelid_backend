@@ -65,13 +65,16 @@ public class GelidService {
         Context context = contextRepository.findById(contextId)
                 .orElseThrow(() -> new ElementNotFoundException("context: " + contextId));
 
-        Issue issue = issueRepository.findById(issueId)
-                .orElseThrow(() -> new ElementNotFoundException("issue: " + issueId));
-
         Segment newSegment = new Segment();
+
+        if (issueId != null) {
+            Issue issue = issueRepository.findById(issueId)
+                    .orElseThrow(() -> new ElementNotFoundException("issue: " + issueId));
+            newSegment.setIssue(issue);
+        }
+
         newSegment.setVideo(video);
         newSegment.setContext(context);
-        newSegment.setIssue(issue);
         newSegment.setIssueType(issueType);
         newSegment.setStartSecond(startSecond);
         newSegment.setEndSecond(endSecond);
