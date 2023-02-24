@@ -10,8 +10,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ElementNotFoundException.class)
-    public ResponseEntity<String> handleException(ElementNotFoundException ex) {
+    public ResponseEntity<String> handleElementNotFoundException(ElementNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot find " + ex.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(ElementAlreadyExistException.class)
+    public ResponseEntity<String> handleElementAlreadyExistException(ElementAlreadyExistException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getLocalizedMessage() + "already exist");
     }
 
 }
