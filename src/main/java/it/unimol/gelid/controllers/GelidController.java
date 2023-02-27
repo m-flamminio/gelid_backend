@@ -97,11 +97,11 @@ public class GelidController {
     }
 
     @PostMapping("users")
-    public ResponseEntity<String> addUser(
+    public ResponseEntity<Boolean> addUser(
             @RequestParam String username,
             @RequestParam String password
     ) {
         gelidService.addUser(username, password);
-        return ResponseEntity.ok("Username Added");
+        return ResponseEntity.ok(true);
     }
 }
